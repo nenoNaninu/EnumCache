@@ -22,7 +22,7 @@ namespace Test
         [Test]
         public void Test1()
         {
-            var array = EnumCache.GetNumericalValues<TestEnum, int>();
+            var array = EnumCache.GetUnderlyingValues<TestEnum, int>();
             foreach (var item in array)
             {
                 Console.WriteLine(item);

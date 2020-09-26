@@ -10,15 +10,15 @@ namespace EnumCacheSpace
         public static IReadOnlyList<TEnum> GetValues<TEnum>() where TEnum : Enum => CacheCore<TEnum>.Values;
         public static ReadOnlySpan<TEnum> GetValuesAsSpan<TEnum>() where TEnum : Enum => CacheCore<TEnum>.Values;
 
-        public static IReadOnlyList<TUnderlying> GetNumericalValues<TEnum, TUnderlying>()
+        public static IReadOnlyList<TUnderlying> GetUnderlyingValues<TEnum, TUnderlying>()
             where TEnum : Enum
             where TUnderlying : struct
-            => UnderlyingCache<TEnum, TUnderlying>.NumericalValues;
+            => UnderlyingCache<TEnum, TUnderlying>.UnderlyingValues;
 
-        public static ReadOnlySpan<TUnderlying> GetNumericalValuesAsSpan<TEnum, TUnderlying>()
+        public static ReadOnlySpan<TUnderlying> GetUnderlyingValuesAsSpan<TEnum, TUnderlying>()
             where TEnum : Enum
             where TUnderlying : struct
-            => UnderlyingCache<TEnum, TUnderlying>.NumericalValues;
+            => UnderlyingCache<TEnum, TUnderlying>.UnderlyingValues;
 
         public static IReadOnlyList<string> GetNames<TEnum>() where TEnum : Enum => CacheCore<TEnum>.Names;
         public static ReadOnlySpan<string> GetNamesAsSpan<TEnum>() where TEnum : Enum => CacheCore<TEnum>.Names;
@@ -55,7 +55,7 @@ namespace EnumCacheSpace
             where TEnum : Enum
             where TUnderlying : struct
         {
-            var values = UnderlyingCache<TEnum, TUnderlying>.NumericalValues;
+            var values = UnderlyingCache<TEnum, TUnderlying>.UnderlyingValues;
             foreach (var item in values)
             {
                 if (EqualityComparer<TUnderlying>.Default.Equals(value, item))
@@ -116,7 +116,7 @@ namespace EnumCacheSpace
             where TEnum : Enum
             where TUnderlying : struct
         {
-            var values = UnderlyingCache<TEnum, TUnderlying>.NumericalValues;
+            var values = UnderlyingCache<TEnum, TUnderlying>.UnderlyingValues;
 
             for (int i = 0; i < values.Length; i++)
             {
@@ -134,7 +134,7 @@ namespace EnumCacheSpace
             where TEnum : Enum
             where TUnderlying : struct
         {
-            var values = UnderlyingCache<TEnum, TUnderlying>.NumericalValues;
+            var values = UnderlyingCache<TEnum, TUnderlying>.UnderlyingValues;
 
             for (int i = 0; i < values.Length; i++)
             {
@@ -167,10 +167,10 @@ namespace EnumCacheSpace
             where TEnum : Enum
             where TUnderlying : struct
         {
-            internal static readonly TUnderlying[] NumericalValues;
+            internal static readonly TUnderlying[] UnderlyingValues;
             static UnderlyingCache()
             {
-                NumericalValues = CacheCore<TEnum>.Values as TUnderlying[];
+                UnderlyingValues = CacheCore<TEnum>.Values as TUnderlying[];
             }
         }
     }
