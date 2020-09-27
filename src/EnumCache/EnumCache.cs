@@ -23,12 +23,12 @@ namespace EnumCacheSpace
         public static IReadOnlyList<string> GetNames<TEnum>() where TEnum : struct, Enum => CacheCore<TEnum>.Names;
         public static ReadOnlySpan<string> GetNamesAsSpan<TEnum>() where TEnum : struct, Enum => CacheCore<TEnum>.Names;
 
-        public static bool IsDefined<TEnum>(TEnum source) where TEnum : struct, Enum
+        public static bool IsDefined<TEnum>(TEnum value) where TEnum : struct, Enum
         {
             var values = CacheCore<TEnum>.Values;
             foreach (var item in values)
             {
-                if (EqualityComparer<TEnum>.Default.Equals(source, item))
+                if (EqualityComparer<TEnum>.Default.Equals(value, item))
                 {
                     return true;
                 }
