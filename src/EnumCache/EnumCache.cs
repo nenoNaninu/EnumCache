@@ -5,25 +5,25 @@ namespace EnumCacheSpace
 {
     public static class EnumCache
     {
-        public static string TypeName<TEnum>() where TEnum : Enum => CacheCore<TEnum>.TypeName;
+        public static string TypeName<TEnum>() where TEnum : struct, Enum => CacheCore<TEnum>.TypeName;
 
-        public static IReadOnlyList<TEnum> GetValues<TEnum>() where TEnum : Enum => CacheCore<TEnum>.Values;
-        public static ReadOnlySpan<TEnum> GetValuesAsSpan<TEnum>() where TEnum : Enum => CacheCore<TEnum>.Values;
+        public static IReadOnlyList<TEnum> GetValues<TEnum>() where TEnum : struct, Enum => CacheCore<TEnum>.Values;
+        public static ReadOnlySpan<TEnum> GetValuesAsSpan<TEnum>() where TEnum : struct, Enum => CacheCore<TEnum>.Values;
 
         public static IReadOnlyList<TUnderlying> GetUnderlyingValues<TEnum, TUnderlying>()
-            where TEnum : Enum
+            where TEnum : struct, Enum
             where TUnderlying : struct
             => UnderlyingCache<TEnum, TUnderlying>.UnderlyingValues;
 
         public static ReadOnlySpan<TUnderlying> GetUnderlyingValuesAsSpan<TEnum, TUnderlying>()
-            where TEnum : Enum
+            where TEnum : struct, Enum
             where TUnderlying : struct
             => UnderlyingCache<TEnum, TUnderlying>.UnderlyingValues;
 
-        public static IReadOnlyList<string> GetNames<TEnum>() where TEnum : Enum => CacheCore<TEnum>.Names;
-        public static ReadOnlySpan<string> GetNamesAsSpan<TEnum>() where TEnum : Enum => CacheCore<TEnum>.Names;
+        public static IReadOnlyList<string> GetNames<TEnum>() where TEnum : struct, Enum => CacheCore<TEnum>.Names;
+        public static ReadOnlySpan<string> GetNamesAsSpan<TEnum>() where TEnum : struct, Enum => CacheCore<TEnum>.Names;
 
-        public static bool IsDefined<TEnum>(TEnum source) where TEnum : Enum
+        public static bool IsDefined<TEnum>(TEnum source) where TEnum : struct, Enum
         {
             var values = CacheCore<TEnum>.Values;
             foreach (var item in values)
@@ -37,7 +37,7 @@ namespace EnumCacheSpace
             return false;
         }
 
-        public static bool IsDefined<TEnum>(string value) where TEnum : Enum
+        public static bool IsDefined<TEnum>(string value) where TEnum : struct, Enum
         {
             var names = CacheCore<TEnum>.Names;
             foreach (var item in names)
@@ -52,7 +52,7 @@ namespace EnumCacheSpace
         }
 
         public static bool IsDefined<TEnum, TUnderlying>(TUnderlying value)
-            where TEnum : Enum
+            where TEnum : struct, Enum
             where TUnderlying : struct
         {
             var values = UnderlyingCache<TEnum, TUnderlying>.UnderlyingValues;
@@ -67,7 +67,7 @@ namespace EnumCacheSpace
             return false;
         }
 
-        public static string GetName<TEnum>(TEnum value) where TEnum : Enum
+        public static string GetName<TEnum>(TEnum value) where TEnum : struct, Enum
         {
             var values = CacheCore<TEnum>.Values;
 
@@ -82,7 +82,7 @@ namespace EnumCacheSpace
             return string.Empty;
         }
 
-        public static TEnum Parse<TEnum>(string value) where TEnum : Enum
+        public static TEnum Parse<TEnum>(string value) where TEnum : struct, Enum
         {
             var names = CacheCore<TEnum>.Names;
             for (int i = 0; i < names.Length; i++)
@@ -96,7 +96,7 @@ namespace EnumCacheSpace
             throw new ArgumentException($"{nameof(value)} is not defined in {CacheCore<TEnum>.TypeName}");
         }
 
-        public static bool TryParse<TEnum>(string value, out TEnum result) where TEnum : Enum
+        public static bool TryParse<TEnum>(string value, out TEnum result) where TEnum : struct, Enum
         {
             var names = CacheCore<TEnum>.Names;
             for (int i = 0; i < names.Length; i++)
@@ -113,7 +113,7 @@ namespace EnumCacheSpace
         }
 
         public static TEnum Parse<TEnum, TUnderlying>(TUnderlying value)
-            where TEnum : Enum
+            where TEnum : struct, Enum
             where TUnderlying : struct
         {
             var values = UnderlyingCache<TEnum, TUnderlying>.UnderlyingValues;
@@ -131,7 +131,7 @@ namespace EnumCacheSpace
 
 
         public static bool TryParse<TEnum, TUnderlying>(TUnderlying value, out TEnum result)
-            where TEnum : Enum
+            where TEnum : struct, Enum
             where TUnderlying : struct
         {
             var values = UnderlyingCache<TEnum, TUnderlying>.UnderlyingValues;
@@ -149,7 +149,7 @@ namespace EnumCacheSpace
             return false;
         }
 
-        private static class CacheCore<TEnum> where TEnum : Enum
+        private static class CacheCore<TEnum> where TEnum : struct, Enum
         {
             internal static readonly string[] Names;
             internal static readonly TEnum[] Values;
@@ -164,7 +164,7 @@ namespace EnumCacheSpace
         }
 
         private static class UnderlyingCache<TEnum, TUnderlying>
-            where TEnum : Enum
+            where TEnum : struct, Enum
             where TUnderlying : struct
         {
             internal static readonly TUnderlying[] UnderlyingValues;
@@ -177,10 +177,10 @@ namespace EnumCacheSpace
 
     public static class EnumCacheExtensions
     {
-        public static string ToStringFromCache<TEnum>(this TEnum source) where TEnum : Enum
+        public static string ToStringFromCache<TEnum>(this TEnum source) where TEnum : struct, Enum
             => EnumCache.GetName(source);
 
-        public static bool IsDefined<TEnum>(this TEnum source) where TEnum : Enum
+        public static bool IsDefined<TEnum>(this TEnum source) where TEnum : struct, Enum
             => EnumCache.IsDefined(source);
     }
 }
