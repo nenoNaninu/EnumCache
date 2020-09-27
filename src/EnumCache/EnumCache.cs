@@ -10,6 +10,9 @@ namespace EnumCacheSpace
         public static IReadOnlyList<TEnum> GetValues<TEnum>() where TEnum : struct, Enum => CacheCore<TEnum>.Values;
         public static ReadOnlySpan<TEnum> GetValuesAsSpan<TEnum>() where TEnum : struct, Enum => CacheCore<TEnum>.Values;
 
+        public static IReadOnlyList<string> GetNames<TEnum>() where TEnum : struct, Enum => CacheCore<TEnum>.Names;
+        public static ReadOnlySpan<string> GetNamesAsSpan<TEnum>() where TEnum : struct, Enum => CacheCore<TEnum>.Names;
+
         public static IReadOnlyList<TUnderlying> GetUnderlyingValues<TEnum, TUnderlying>()
             where TEnum : struct, Enum
             where TUnderlying : struct
@@ -19,9 +22,6 @@ namespace EnumCacheSpace
             where TEnum : struct, Enum
             where TUnderlying : struct
             => UnderlyingCache<TEnum, TUnderlying>.UnderlyingValues;
-
-        public static IReadOnlyList<string> GetNames<TEnum>() where TEnum : struct, Enum => CacheCore<TEnum>.Names;
-        public static ReadOnlySpan<string> GetNamesAsSpan<TEnum>() where TEnum : struct, Enum => CacheCore<TEnum>.Names;
 
         public static bool IsDefined<TEnum>(TEnum value) where TEnum : struct, Enum
         {
