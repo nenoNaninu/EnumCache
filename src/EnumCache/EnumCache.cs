@@ -37,12 +37,12 @@ namespace EnumCacheSpace
             return false;
         }
 
-        public static bool IsDefined<TEnum>(string name) where TEnum : Enum
+        public static bool IsDefined<TEnum>(string value) where TEnum : Enum
         {
             var names = CacheCore<TEnum>.Names;
             foreach (var item in names)
             {
-                if (name == item)
+                if (value == item)
                 {
                     return true;
                 }
@@ -67,13 +67,13 @@ namespace EnumCacheSpace
             return false;
         }
 
-        public static string GetName<TEnum>(TEnum source) where TEnum : Enum
+        public static string GetName<TEnum>(TEnum value) where TEnum : Enum
         {
             var values = CacheCore<TEnum>.Values;
 
             for (int i = 0; i < values.Length; i++)
             {
-                if (EqualityComparer<TEnum>.Default.Equals(source, values[i]))
+                if (EqualityComparer<TEnum>.Default.Equals(value, values[i]))
                 {
                     return CacheCore<TEnum>.Names[i];
                 }
